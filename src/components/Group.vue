@@ -6,9 +6,11 @@
 
 <script>
 import {notes} from '../notes.js';
+import Base64toAB from 'base64-arraybuffer';
 const prefix = 'data:audio/mpeg;base64,';
 const base = 2;
 const keys = 12;
+var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 export default {
     props: {
         group: {
@@ -33,8 +35,41 @@ export default {
     },
     methods: {
         play(index) {
-            var audio = new Audio(prefix + notes[index + base]);
-            audio.play();
+            console.log(index);
+            /*var audio = new Audio(prefix + notes[index + base]);
+            audio.play();*/
+            
+            var source = audioCtx.createBufferSource();
+            /*var data = Base64toAB.decode(prefix+notes[index+base]);
+            console.log(prefix+notes[index+base]);
+            console.log(data);
+            audioCtx.decodeAudioData(data, function(buffer) {  
+                 source.buffer = buffer;
+                 source.connect(audioCtx.destination);
+                 source.loop = true;
+            }); */
+            var request = new XMLHttpRequest();
+            var num = index+21;
+            var url = 'static/audio'+'/German Concert D 0'+num+' 083.ogg';
+            console.log(url);
+            request.open('GET', url,/*'static/audio/German Concert D 040 083.ogg',*/ true);
+            request.responseType = 'arraybuffer';
+            request.onload = function() {
+            var audioData = request.response;
+            console.log(audioData);
+            audioCtx.decodeAudioData(audioData, function(buffer) {
+            source.buffer = buffer;
+            source.connect(audioCtx.destination);
+            source.start(0);
+            //source.stop(2);
+            //source.loop = true;
+      },
+
+      function(e){"Error with decoding audio data" + e.err});
+
+  }
+
+  request.send();
         },
         calcLeft(index) {
             var unit = 14.29;
