@@ -4,6 +4,7 @@
             <input type="checkbox" v-model="full" id="full"><label for="full">完整键盘</label>
         </div>
         <div class="keyboard">
+		    <group :group="-1" v-show="full"></group>
             <group :group="0" v-show="full"></group>
             <group :group="1" v-show="full"></group>
             <group :group="2"></group>
@@ -11,6 +12,7 @@
             <group :group="4"></group>
             <group :group="5" v-show="full"></group>
             <group :group="6" v-show="full"></group>
+			<group :group="7" v-show="full"></group>
         </div>
     </div>
 </template>

@@ -1,12 +1,13 @@
 <template>
     <div class="group">
-        <button :class="{'white': whites.indexOf(n) > -1, 'black': blacks.indexOf(n) > -1}" v-for="n in 12" :style="{ left: calcLeft(n) + '%' }" data-note="{{start+n}}" @click="play(start+n)"><span v-show="n === 0">C</span></button>
+        <button :class="{'white': whites.indexOf(n) > -1, 'black': blacks.indexOf(n) > -1}" v-for="n in 12" :style="{ left: calcLeft(n) + '%' , visibility:calcDisplay(start+n) }" data-note="{{start+n}}" @click="play(start+n)"><span v-show="n === 0">C</span></button>
     </div>
 </template>
 
 <script>
 import {notes} from '../notes.js';
-import Base64toAB from 'base64-arraybuffer';
+import Base64toAB from 'base64-arraybuffer'
+import piano from '../piano.js'
 const prefix = 'data:audio/mpeg;base64,';
 const base = 2;
 const keys = 12;
@@ -36,27 +37,34 @@ export default {
     methods: {
         play(index) {
             console.log(index);
+            piano.play(index);
+            //piano.playx();
             /*var audio = new Audio(prefix + notes[index + base]);
             audio.play();*/
             
-            var source = audioCtx.createBufferSource();
-            /*var data = Base64toAB.decode(prefix+notes[index+base]);
-            console.log(prefix+notes[index+base]);
+            /*var source = audioCtx.createBufferSource();
+            var data = Base64toAB.decode(notes[index+base]);
+            //console.log(prefix+notes[index+base]);
             console.log(data);
             audioCtx.decodeAudioData(data, function(buffer) {  
                  source.buffer = buffer;
                  source.connect(audioCtx.destination);
-                 source.loop = true;
+                 //source.loop = true;
+                 source.start(0);
             }); */
-            var request = new XMLHttpRequest();
+            /*var request = new XMLHttpRequest();
             var num = index+21;
-            var url = 'static/audio'+'/German Concert D 0'+num+' 083.ogg';
+            num = '000'+num;
+            num = num.substr(num.length-3,3);
+            console.log(num);
+            var url = 'static/audio'+'/German Concert D '+num+' 083.ogg';
             console.log(url);
-            request.open('GET', url,/*'static/audio/German Concert D 040 083.ogg',*/ true);
+            request.open('GET', url, true);
             request.responseType = 'arraybuffer';
             request.onload = function() {
             var audioData = request.response;
             console.log(audioData);
+            console.log(Base64toAB.encode(audioData));
             audioCtx.decodeAudioData(audioData, function(buffer) {
             source.buffer = buffer;
             source.connect(audioCtx.destination);
@@ -69,7 +77,7 @@ export default {
 
   }
 
-  request.send();
+  request.send();*/
         },
         calcLeft(index) {
             var unit = 14.29;
@@ -79,6 +87,13 @@ export default {
             }
             return unit * (1.75 + i);
         },
+		calcDisplay(index) {
+			if(index<-3||index>84){
+			return 'hidden';
+			}else{
+			return 'visible';
+			}
+		},
         click(index) {
 
         }

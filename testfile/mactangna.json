@@ -1,0 +1,38 @@
+{
+	timeSignature : [4, 4],
+	tempo : 120,
+	notes : {
+		// Shorthand notation
+		rightHand : [
+			'quarter|B3,G4',
+			'quarter|B3,G4',
+			'quarter|B3,G4',
+			'quarter|B3,D4',
+			'quarter|C4,E4',
+			'quarter|C4,E4',
+			'half|D4',
+			'quarter|D4,B4',
+			'quarter|D4,B4',
+			'quarter|D4,A4',
+			'quarter|D4,A4',
+			'half|D4,G4'			
+		],
+		// More verbose notation
+		leftHand : [
+			'quarter|G2',
+			'quarter|rest',
+			'quarter|B2',
+			'quarter|rest',
+			'quarter|C3',
+			'quarter|rest',
+			'quarter|B2',
+			'quarter|G2',
+			'quarter|D3',
+			'quarter|rest',
+			'quarter|F3',
+			'quarter|rest',
+			'quarter|G3',
+			'quarter|D3'
+			]
+	}
+};
